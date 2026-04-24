@@ -7,10 +7,10 @@
 
 import Foundation
 
-struct Contact: Codable {
+struct Contact: Codable, Identifiable{
     let name: String
-    let id: Int
-    let companyName: String
+    let id: String
+    let companyName: String?
     var isFavorite: Bool
     let smallImageURL: String
     let largeImageURL: String
@@ -18,12 +18,20 @@ struct Contact: Codable {
     let birthdate: String
     let phone: Phone
     let address: Address
+    
+    var smallImageUrl: URL? {
+        return URL(string: smallImageURL)
+    }
+    
+    var largeImageUrl: URL? {
+        return URL(string: largeImageURL)
+    }
 }
 
 struct Phone: Codable {
-    let work: Int?
-    let home: Int?
-    let mobile: Int?
+    let work: String?
+    let home: String?
+    let mobile: String?
 }
 
 struct Address: Codable {
