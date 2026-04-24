@@ -8,6 +8,11 @@
 import Foundation
 import Combine
 
+struct ContactList {
+    var favorites: [Contact]
+    var unfavorites: [Contact]
+}
+
 class ContactViewModel: ObservableObject {
     let service: ServiceRepository
     
@@ -19,7 +24,7 @@ class ContactViewModel: ObservableObject {
     
     enum ViewState {
         case loading
-        case success([Contact])
+        case success(ContactList)
         case failure
     }
     
@@ -27,7 +32,9 @@ class ContactViewModel: ObservableObject {
         states = .loading
         do {
             let contacts = try await service.fetchContacts()
-            states = .success(contacts)
+            let favorites = contacts.filter { $0.isFavorite == true }
+            let unfavorites = contacts.filter { $0.isFavorite == false }
+            states = .success(ContactList(favorites: favorites, unfavorites: unfavorites))
         } catch {
             states = .failure
         }
