@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Contact: Codable, Identifiable{
+struct Contact: Codable, Identifiable, Hashable {
     let name: String
     let id: String
     let companyName: String?
@@ -28,13 +28,13 @@ struct Contact: Codable, Identifiable{
     }
 }
 
-struct Phone: Codable {
+struct Phone: Codable, Hashable {
     let work: String?
     let home: String?
     let mobile: String?
 }
 
-struct Address: Codable {
+struct Address: Codable, Hashable {
     let street: String
     let city: String
     let state: String
