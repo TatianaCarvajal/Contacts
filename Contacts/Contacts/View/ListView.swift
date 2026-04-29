@@ -47,7 +47,11 @@ struct ListView: View {
                 await viewModel.getAllContacts()
             }
             .navigationDestination(for: Contact.self) { contact in
-                ContactDetailView(contact: contact)
+                ContactDetailView(contact: Binding(get: {
+                    viewModel.getContactById(id: contact.id)
+                }, set: { contact in
+                    viewModel.reloadList(contact: contact)
+                }))
             }
         }
     }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContactDetailView: View {
-    var contact: Contact
+    @Binding var contact: Contact
     
     var body: some View {
         VStack {
@@ -58,6 +58,45 @@ struct ContactDetailView: View {
             }
             .listStyle(.insetGrouped)
         }
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    contact.isFavorite.toggle()
+                } label: {
+                    Image(systemName: contact.isFavorite ? "heart.fill" : "heart")
+                }
+            }
+        }
     }
 }
+
+#Preview {
+    ContactDetailView(
+        contact: Binding.constant(
+            Contact(
+                name: "Miss Piggy",
+                id: "13",
+                companyName: "Muppets, Baby",
+                isFavorite: true,
+                smallImageURL: "https://s3.amazonaws.com/technical-challenge/v3/images/miss-piggy-small.jpg",
+                largeImageURL: "https://s3.amazonaws.com/technical-challenge/v3/images/miss-piggy-large.jpg",
+                emailAddress: "Miss.Piggy@muppetsbaby.com",
+                birthdate: "1987-05-11",
+                phone: .init(
+                    work: "602-225-9543",
+                    home: "602-225-9188",
+                    mobile: ""
+                ),
+                address: .init(
+                    street: "3530 E Washington St",
+                    city: "Phoenix",
+                    state: "AZ",
+                    country: "US",
+                    zipCode: "85034"
+                )
+            )
+        )
+    )
+}
+
 
